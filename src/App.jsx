@@ -1,14 +1,27 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
+const INACTIVITY_TIMEOUT_MS = 2 * 60 * 1000 // 2 minutes
+
 export default function App() {
   const [view, setView] = useState('landing')
   const [status, setStatus] = useState('loading')
   const [mirrored, setMirrored] = useState(false)
+  const [inactive, setInactive] = useState(false)
   const videoRef = useRef(null)
   const streamRef = useRef(null)
+  const inactivityTimer = useRef(null)
+
+  const stopCamera = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(t => t.stop())
+      streamRef.current = null
+    }
+    if (videoRef.current) videoRef.current.srcObject = null
+  }, [])
 
   const startCamera = useCallback(async () => {
     setStatus('loading')
+    setInactive(false)
     if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop())
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -25,6 +38,27 @@ export default function App() {
       setStatus('error')
     }
   }, [])
+
+  const resetInactivityTimer = useCallback(() => {
+    if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
+    if (view !== 'camera') return
+    inactivityTimer.current = setTimeout(() => {
+      stopCamera()
+      setInactive(true)
+    }, INACTIVITY_TIMEOUT_MS)
+  }, [view, stopCamera])
+
+  // Start inactivity tracking when camera view is active
+  useEffect(() => {
+    if (view !== 'camera') return
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'click']
+    events.forEach(e => window.addEventListener(e, resetInactivityTimer, { passive: true }))
+    resetInactivityTimer()
+    return () => {
+      events.forEach(e => window.removeEventListener(e, resetInactivityTimer))
+      if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
+    }
+  }, [view, resetInactivityTimer])
 
   useEffect(() => {
     if (view === 'camera') startCamera()
@@ -64,6 +98,25 @@ export default function App() {
             <p>Purpose-built for zero distraction. Simple and intuitive.</p>
           </div>
         </section>
+      </div>
+    )
+  }
+
+  if (inactive) {
+    return (
+      <div className="app-main">
+        <div className="app-nav">
+          <button className="back-btn" onClick={() => setView('landing')}>← Exit</button>
+          <div className="app-logo">AsYouAre</div>
+          <div className="status-pill idle"><div className="dot idle-dot" /> Paused</div>
+        </div>
+        <div className="cam-viewport idle-screen">
+          <div className="idle-content">
+            <p className="idle-title">Camera paused</p>
+            <p className="idle-sub">Turned off after 2 minutes of inactivity</p>
+            <button className="hero-btn primary" onClick={startCamera}>Resume Camera</button>
+          </div>
+        </div>
       </div>
     )
   }
