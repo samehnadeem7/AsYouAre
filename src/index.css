@@ -39,11 +39,11 @@ body {
 }
 
 .landing-nav {
-  height: 80px;
+  height: calc(80px + env(safe-area-inset-top));
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: env(safe-area-inset-top) 40px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -79,7 +79,7 @@ body {
 /* ─── App Main ─── */
 .app-main { width: 100vw; height: 100dvh; display: flex; flex-direction: column; background: #000; overflow: hidden; }
 
-.app-nav { height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--border); background: #000; }
+.app-nav { height: calc(50px + env(safe-area-inset-top)); display: flex; align-items: center; justify-content: space-between; padding: env(safe-area-inset-top) 20px 0; border-bottom: 1px solid var(--border); background: #000; }
 .back-btn { background: none; border: none; color: var(--text-2); font-size: 13px; cursor: pointer; }
 .app-logo { font-size: 14px; font-weight: 600; }
 .status-pill { display: flex; align-items: center; gap: 6px; font-size: 11px; text-transform: uppercase; color: var(--text-2); background: var(--bg-3); border-radius: var(--radius-full); padding: 5px 12px; border: 1px solid var(--border); }
@@ -119,7 +119,7 @@ video.mirrored { transform: scaleX(-1); }
 
 
 @media (max-width: 600px) {
-  .landing-nav { height: 60px; padding: 0 16px; }
+  .landing-nav { height: calc(60px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 16px 0; }
   .logo { font-size: 15px; }
   .pill-btn { padding: 6px 12px; font-size: 11px; }
 
@@ -130,7 +130,7 @@ video.mirrored { transform: scaleX(-1); }
   .features { flex-direction: column; align-items: center; padding: 20px 20px 40px; gap: 16px; }
   .feature-card { padding: 20px; width: 100%; max-width: 100%; }
 
-  .app-nav { height: 44px; padding: 0 12px; }
+  .app-nav { height: calc(44px + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 12px 0; }
   .app-logo { font-size: 13px; }
   .status-pill { padding: 4px 8px; font-size: 10px; gap: 4px; }
 }

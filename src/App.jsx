@@ -1,41 +1,37 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { auth } from './firebase'
 
 export default function App() {
-  const [view, setView] = useState('landing') // 'landing' | 'camera'
+  const [view, setView] = useState('landing')
   const [status, setStatus] = useState('loading')
-  const [mirrored, setMirrored] = useState(false) // TRUE VIEW by default
+  const [mirrored, setMirrored] = useState(false)
   const videoRef = useRef(null)
   const streamRef = useRef(null)
 
-  // ── Camera Controller ───────────────────────────────────────────────────
   const startCamera = useCallback(async () => {
-    setStatus('loading');
-    if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
+    setStatus('loading')
+    if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop())
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'user', width: { ideal: 1280 } },
         audio: false
-      });
-      streamRef.current = stream;
+      })
+      streamRef.current = stream
       if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play().then(() => setStatus('ready')).catch(() => setStatus('ready'));
+        videoRef.current.srcObject = stream
+        videoRef.current.play().then(() => setStatus('ready')).catch(() => setStatus('ready'))
       }
     } catch (err) {
-      alert("Error: " + err.message);
-      setStatus('error');
+      alert('Camera error: ' + err.message)
+      setStatus('error')
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    if (view === 'camera') {
-      startCamera();
-    }
+    if (view === 'camera') startCamera()
     return () => {
-      if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
+      if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop())
     }
-  }, [view, startCamera]);
+  }, [view, startCamera])
 
   if (view === 'landing') {
     return (
@@ -47,7 +43,7 @@ export default function App() {
         <main className="landing-hero">
           <h1 className="hero-title">See yourself as you <span className="gradient">truly</span> are.</h1>
           <p className="hero-subtitle">
-            Most cameras show a flipped version of you. We don't. <br/>
+            Most cameras show a flipped version of you. We don't. <br />
             Experience the "True View" and see yourself the way the world sees you.
           </p>
           <div className="hero-actions">
@@ -69,7 +65,7 @@ export default function App() {
           </div>
         </section>
       </div>
-    );
+    )
   }
 
   return (
@@ -79,23 +75,19 @@ export default function App() {
         <div className="app-logo">AsYouAre</div>
         <div className="status-pill"><div className="dot" /> Live Preview</div>
       </div>
-
       <div className="cam-viewport">
         {(status === 'ready' || status === 'loading') && (
           <video ref={videoRef} autoPlay playsInline muted className={mirrored ? 'mirrored' : ''} />
         )}
         {status === 'loading' && <div className="cam-overlay">Initializing Camera...</div>}
-        
         <div className="cam-v-controls">
-           <button className={`mode-pill ${!mirrored ? 'active' : ''}`} onClick={() => setMirrored(false)}>True View</button>
-           <button className={`mode-pill ${mirrored ? 'active' : ''}`} onClick={() => setMirrored(true)}>Mirror Mode</button>
+          <button className={`mode-pill ${!mirrored ? 'active' : ''}`} onClick={() => setMirrored(false)}>True View</button>
+          <button className={`mode-pill ${mirrored ? 'active' : ''}`} onClick={() => setMirrored(true)}>Mirror Mode</button>
         </div>
-
-        {/* Action Button: No Capture, just helpful guidance */}
         <div className="cam-footer">
           <button className="reset-link" onClick={startCamera}>Reset Feed</button>
         </div>
       </div>
     </div>
-  );
+  )
 }
