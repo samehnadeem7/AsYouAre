@@ -117,8 +117,20 @@ video.mirrored { transform: scaleX(-1); }
 
 .reset-link:hover { opacity: 1; }
 
+
 @media (max-width: 600px) {
-  .hero-title { font-size: 36px; }
-  .features { flex-direction: column; align-items: center; padding: 20px; }
-  .hero-subtitle { font-size: 14px; }
+  .landing-nav { height: 60px; padding: 0 16px; }
+  .logo { font-size: 15px; }
+  .pill-btn { padding: 6px 12px; font-size: 11px; }
+
+  .hero-title { font-size: 32px; padding: 0 10px; }
+  .hero-subtitle { font-size: 13px; line-height: 1.5; padding: 0 15px; margin-bottom: 30px; }
+  .hero-btn { padding: 12px 24px; font-size: 14px; }
+  
+  .features { flex-direction: column; align-items: center; padding: 20px 20px 40px; gap: 16px; }
+  .feature-card { padding: 20px; width: 100%; max-width: 100%; }
+
+  .app-nav { height: 44px; padding: 0 12px; }
+  .app-logo { font-size: 13px; }
+  .status-pill { padding: 4px 8px; font-size: 10px; gap: 4px; }
 }
