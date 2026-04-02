@@ -122,8 +122,9 @@ video.mirrored { transform: scaleX(-1); }
   .logo { font-size: 15px; }
   .pill-btn { padding: 6px 12px; font-size: 11px; }
 
-  .hero-title { font-size: 32px; padding: 0 10px; }
-  .hero-subtitle { font-size: 13px; line-height: 1.5; padding: 0 15px; margin-bottom: 30px; }
+  .landing-hero { flex: none; padding: 32px 20px 24px; }
+  .hero-title { font-size: 32px; padding: 0 10px; margin-bottom: 16px; }
+  .hero-subtitle { font-size: 13px; line-height: 1.5; padding: 0 15px; margin-bottom: 24px; }
   .hero-btn { padding: 12px 24px; font-size: 14px; }
   
   .features { flex-direction: column; align-items: center; padding: 20px 20px 40px; gap: 16px; }
