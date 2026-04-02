@@ -1,16 +1,20 @@
-# React + Vite
+# AsYouAre
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### See yourself as you truly are.
 
-Currently, two official plugins are available:
+Most cameras show a flipped version of you. We don't. Experience the "True View" and see yourself the way the world sees you.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+### Features
+- **True View**: Non-mirrored live preview for an authentic perspective.
+- **As It Is**: No filters, no mirroring. Just an honest window to the real you.
+- **Minimalist**: Purpose-built for zero distraction. Simple and intuitive.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Tech
+- **React + Vite** 
+- **CSS3 (Custom)**
+- **Mobile-First PWA Responsive**
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+Built by [samehnadeem7](https://github.com/samehnadeem7)
